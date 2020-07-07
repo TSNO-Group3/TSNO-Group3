@@ -3,10 +3,11 @@ import { singUp } from './UserMethods'
 import { Link } from 'react-router-dom'
 import StyleSheet from './StyleSheet.css';
 import logo from './Logo.png';
+import Axios from 'axios';
 
 class SignUpForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: '',
@@ -30,6 +31,7 @@ class SignUpForm extends Component {
             password: this.state.password
         }
 
+        //send values to DB
             singUp(newUser).then(res => {
             this.props.history.push(`/login`)
         })

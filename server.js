@@ -25,13 +25,16 @@ if(process.env.NODE_ENV === "production") {
 const mongoURI = process.env.ATLAS_URI;
 
 mongoose
-    .connect(mongoURI, {useNewUrlParser: true})
+    .connect(mongoURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => console.log('DataBase connected to the server'))
     .catch(err => console.log(err))
 
 var Users = require('./routes/Users')
 
-app.use('/users', Users)
+app.use('/', Users)
 
 app.listen(port, () => {
     console.log(`Server is running on ${port} Visit https://localhost:${port}`)

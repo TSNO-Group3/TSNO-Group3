@@ -99,6 +99,8 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/User')
 
+const accessTokenSecret = 'youraccesstokensecret';
+
 router.post('/signup', (req,res) => {  
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
@@ -109,14 +111,14 @@ router.post('/signup', (req,res) => {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(req.body.email, salt, (err, hash) => {
           if (err) throw err;
-
+          console.log 
           //add new user to the db
           const newUser = new User({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password
+            password: hash
           });
-
+          console.log(newUser)
           newUser
         .save()
         .then(user => res.json(user))
@@ -139,7 +141,17 @@ router.post("/login",function (req, res) {
     if (!user) {
       return res.status(404).json({ emailnotfound: "Email not found" });
     }
-    bcrypt.compareSync(password, user.password)
+    bcrypt.compare(password, user.password,(err, result) =>{
+      if (err) {
+        return res.status(400).json({ PasswrdNotCorrect: "password not correct" })
+      }
+      const accessToken = jwt.sign({ name: user.name}, accessTokenSecret);
+      res.json({
+        accessToken
+    });
+    
+
+    })
     console.log(user)
     // compear with the password
 
