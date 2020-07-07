@@ -3,14 +3,16 @@ import { singUp } from './UserMethods'
 import { Link } from 'react-router-dom'
 import StyleSheet from './StyleSheet.css';
 import logo from './Logo.png';
+import Axios from 'axios';
 
 class SignUpForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: '',
             name: '',
+            successful: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -30,7 +32,11 @@ class SignUpForm extends Component {
             password: this.state.password
         }
 
+        //send values to DB
             singUp(newUser).then(res => {
+                this.setState({
+                    successful: true
+                  });
             this.props.history.push(`/login`)
         })
     }

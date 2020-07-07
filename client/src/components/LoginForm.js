@@ -5,12 +5,13 @@ import StyleSheet from './StyleSheet.css';
 import logo from './Logo.png';
 
 class SignInForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            loading: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,10 +29,12 @@ class SignInForm extends Component {
           email: this.state.email,
           password: this.state.password
         }
-    
+        
         login(user).then(res => {
           if (res) {
-            this.props.history.push(`/profile`)
+            this.setState({loading : true});
+            console.log("logged ")
+            // this.props.history.push(`/profile`)
           }
         })
     }
@@ -55,7 +58,7 @@ class SignInForm extends Component {
               </div>
 <br></br>
               <div>
-                  <button id='logBttn'>Sign In</button> Don't have an account ? <Link to="signup">SignUp</Link> {/*TODO add link to send to signUp */}
+                  <button id='logBttn'  disabled={this.state.loading}>Sign In</button> Don't have an account ? <Link to="signup">SignUp</Link> {/*TODO add link to send to signUp */}
               </div>
             </form>
           </div>

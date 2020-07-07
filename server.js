@@ -25,7 +25,10 @@ if(process.env.NODE_ENV === "production") {
 const mongoURI = process.env.ATLAS_URI;
 
 mongoose
-    .connect(mongoURI, {useNewUrlParser: true})
+    .connect(mongoURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => console.log('DataBase connected to the server'))
     .catch(err => console.log(err))
 
@@ -48,6 +51,7 @@ app.get("/search", function(req, res)  {
          res.json(data);
      });
  });
+
 
 
 
