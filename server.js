@@ -26,14 +26,40 @@ if (process.env.NODE_ENV === "production") {
 const mongoURI = process.env.ATLAS_URI;
 
 mongoose
-    .connect('mongodb://localhost:27017/bta3kolo', { useNewUrlParser: true })
+    .connect(mongoURI ||'mongodb://localhost:27017/bta3kolo', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => console.log('DataBase connected to the server'))
     .catch(err => console.log(err))
 
+     
 var Users = require('./routes/Users')
+//var Search= require('./routes/search')
 
 app.use('/users', Users)
 app.use('/profile', route)
+///app.use('/search',Search)
+
+
+const User = require('./models/User');
+app.get("/search", function(req, res)  {
+    var toSearch= req.body
+    console.log(toSearch)
+     User.find(toSearch,function(err, data)  {
+         if(err){
+             throw err;
+         }
+         res.json(data);
+     });
+ });
+
+
+
+
+
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on ${port} Visit https://localhost:${port}`)

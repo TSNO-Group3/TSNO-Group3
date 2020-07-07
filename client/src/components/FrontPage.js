@@ -1,59 +1,77 @@
 import  React, {Component } from 'react';
+
 import logo from './Logo.png';
+import axios from 'axios'
 
 class FrontPage extends Component {
-    constructor(){
+   
+    
+       constructor(){
         super();
-        this.submitClick = this.submitClick.bind(this);
+       
+        this.state = {
+      value: "teacher",
+      
+    };
+        this.handleChange = this.handleChange.bind(this)
+        
+        this.handleSubmit1 = this.handleSubmit1.bind(this);
+        
+  
+  
     };
 
-    submitClick(event){
-        event.preventDefault();
-        alert('Searching Result');
-    }; 
 
+handleSubmit1(event) {
+    alert("Your favorite flavor is: " + this.state.value );
+    event.preventDefault();
+    console.log(this.state.value)
+    //console.log("orieb")
+    
+
+  //FrontPage//connect server with client 
+   axios.get
+   ("http://localhost:3000/search", this.state.value)
+    .then((res) => {
+        console.log(this.state.value)
+    }).catch((error) => {
+        console.log(error)
+    });
+  
+  }
+ 
+
+  handleChange = event => {
+    this.setState({ value: event.target.value });
+  };
+  
+//make select input 
     render() { 
         return (
             <>
-            <div className = "HomePage">
+            <div>
 <br></br><br></br>
-                <form id='search' onSubmit={this.submitClick}>
-                    <label className="searchL"> Search By Name
-                        <input className="searchI" type="search"></input>
-                        <input className="searchBttn" type="submit" value="Search"></input>
+                <form onSubmit={this.handleSubmit1}>
+                    <label > Search By catogry of  Serves
+                         <select className="searchI" value={this.state.value} onChange={this.handleChange} >
+                        <option value="teacher">teacher</option>
+                        <option value="writer">writer</option>
+                        <option value="doctor">doctor</option>
+                        <option value="translater">translater</option>
+                    </select>
                     </label>
-<br></br><br></br>
-                    <label className="searchL"> Search By Serves
-                        <input className="searchI" type="search"></input>
-                        <input className="searchBttn" type="submit" value="Search"></input>
-                    </label>
-                </form>
-                <table id='serves'>
-                    <thead>
-                        <tr>
-                            <th id='heder'>Available services</th>
-                        </tr> 
-                    </thead>
-                    <tbody id="body">
-                        <tr>
-                            <td id='left'>service 1</td>
-                        </tr>
-                        <tr>
-                            <td id='leftC'>service 2</td>
-                        </tr>
-                        <tr>
-                            <td id='rightC'>service 3</td>
-                        </tr>
-                        <tr>
-                            <td id='right'>service 4</td>
-                        </tr>
-                    </tbody>
-                    </table>
-                    <img src={logo} alt='Logo' id='smallLogo'></img>
-            </div>
+<input type="submit" value="Search"></input>
+</form>
+</div>
+  <br></br><br></br>
+
+            
+          
             </>
         );
     }
 }
 
 export default FrontPage;
+
+
