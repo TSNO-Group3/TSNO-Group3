@@ -1,56 +1,44 @@
-import React, { Component } from 'react'
-import jwt_decode from 'jwt-decode'
-import logo from './Logo.png';
-import BasicProfilePic from './basic-pf-pic.jpg';
+import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Layout from "./Layout"
 
-class Profile extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-          name:'',
-          email:'',
-          job:'',
-          age:'',
-          city:''
-        };
-      }
+class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    }
+    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  };
 
-      componentDidMount() {
-        const token = localStorage.usertoken
-        const decoded = jwt_decode(token)
-        this.setState({
-          name: decoded.name,
-          email: decoded.email
-        })
-      }
+  handleClick(event) {
+    event.preventDefault();
+    alert('Thank you for hiring me');
 
-    render() {
-        return (
-          <>
-<br></br><br></br>
-              <div id='userProf'>
-                <div>
-                    <img id='basicPicP' src={BasicProfilePic} alt='ProfilePic'></img>
-                    <h2>
-                      <label id='userNameP'>Name : {this.state.name}</label>  
-                    </h2>
-                        <div id='pip'>      
-                      <h3>personal information :</h3>
-                    <li><label>email : </label>{this.state.email}</li>
-                    <br></br>
-                    <li><label>Job : </label>{this.state.job}</li>
-                    <br></br>
-                    <li><label>Age : </label>{this.state.age}</li>
-                    <br></br>
-                    <li><label>City : </label>{this.state.city}</li>
-                    </div>
-                </div>
-        </div>
-          <img src={logo} alt='Logo' id='smallLogo'></img>
-        </>
-    )
+  };
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    alert('Thank you for your feedback');
+  };
+
+  render() {
+    return (
+      <div id="Profile">
+        <Layout>
+          <Button color="primary" size="sm" /*onClick={addService(service)}*/>Add Service</Button>{" "}
+          <ListGroup>
+            <ListGroup.Item>Service 1</ListGroup.Item>
+            <ListGroup.Item>Service 2</ListGroup.Item>
+          </ListGroup>{" "}
+          <Button color="primary" size="sm">Hire Me!!</Button>{" "}
+          <Button color="primary" size="sm">Done</Button>{" "}
+        </Layout>
+      </div>
+    );
   }
 }
+
 export default Profile;
-
-
