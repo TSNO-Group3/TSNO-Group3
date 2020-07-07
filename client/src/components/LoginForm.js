@@ -29,11 +29,12 @@ class SignInForm extends Component {
           email: this.state.email,
           password: this.state.password
         }
-    
+        
         login(user).then(res => {
           if (res) {
             this.setState({loading : true});
-            this.props.history.push(`/profile`)
+            console.log("logged ")
+            // this.props.history.push(`/profile`)
           }
         })
     }

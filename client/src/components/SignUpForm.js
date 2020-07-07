@@ -12,6 +12,7 @@ class SignUpForm extends Component {
             email: '',
             password: '',
             name: '',
+            successful: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -33,6 +34,9 @@ class SignUpForm extends Component {
 
         //send values to DB
             singUp(newUser).then(res => {
+                this.setState({
+                    successful: true
+                  });
             this.props.history.push(`/login`)
         })
     }
